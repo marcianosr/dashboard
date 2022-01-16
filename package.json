@@ -18,11 +18,13 @@
 		"express": "^4.17.2",
 		"forever": "^4.0.2",
 		"gh-pages": "^3.2.3",
+		"netlify-lambda": "^2.0.15",
 		"nodemon": "^2.0.15",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-scripts": "5.0.0",
 		"sass": "^1.47.0",
+		"serverless-http": "^2.7.0",
 		"typescript": "^4.5.4",
 		"use-local-storage": "^2.2.6",
 		"web-vitals": "^2.1.3"
@@ -36,8 +38,8 @@
 		"eject": "react-scripts eject",
 		"forever": "forever start server.js",
 		"forever-stop": "forever stop server.js",
-		"deploy": "gh-pages -d build",
-		"predeploy": "npm run build"
+		"server-start": "nodemon server",
+		"server-build": "netlify-lambda build express"
 	},
 	"eslintConfig": {
 		"extends": [

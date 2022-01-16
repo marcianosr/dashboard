@@ -1,10 +1,9 @@
 const axios = require("axios");
 const express = require("express");
-const app = express();
+const serverless = require("serverless-http");
 
-app.get("/", (req, res) => {
-	res.send("Welcome to CORS server 😁");
-});
+const app = express();
+const router = express.Router();
 
 const getWazeData = async (res) => {
 	const result = axios
@@ -38,7 +37,7 @@ const getWazeData = async (res) => {
 	return result;
 };
 
-app.get("/api", async (req, res) => {
+router.get("/api", async (req, res) => {
 	const result = await getWazeData();
 
 	console.log(result);
@@ -50,6 +49,10 @@ app.get("/api", async (req, res) => {
 	});
 });
 
+app.use("/.netlify/functions/api", router);
+
 app.listen(3200, () => {
 	console.log("listening on port 3200");
 });
+
+module.exports.handler = serverless(app);
