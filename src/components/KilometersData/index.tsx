@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import useLocalStorage from "use-local-storage";
 import { KMS_PER_WEEK, MAX_KMS_PER_YEAR, WazeData } from "../../App";
 import SubTitle from "../SubTitle";
@@ -76,6 +76,7 @@ const KilometersData: FC<KilometersDataProps> = ({
 				});
 			}
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<section className={styles.container}>
