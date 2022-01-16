@@ -14,7 +14,8 @@ type KilometersDataProps = {
 const runCronJob = (callback?: () => void) => {
 	// const job = new CronJob("* * * * * *", callback);
 	// const job = new CronJob("* * * * *", callback);
-	const job = new CronJob("59 23 * * 0", callback);
+	// const job = new CronJob("59 23 * * 0", callback);
+	const job = new CronJob("*/10 * * * *", callback);
 
 	job.start();
 };
@@ -27,6 +28,9 @@ const KilometersData: FC<KilometersDataProps> = ({
 	const [localStorageData, setLocalStorageData] =
 		useLocalStorage<WazeData>("waze");
 
+	const startingKilometers = Math.round(
+		localStorageData?.startingKilometers || 0
+	);
 	const lastWeekData = localStorageData?.weeklyUpdate?.at(
 		localStorageData?.weeklyUpdate.length - 2
 	);
@@ -38,16 +42,18 @@ const KilometersData: FC<KilometersDataProps> = ({
 		currentWeekData?.kilometersLeft || 0
 	);
 
-	const lastWeekDate = lastWeekData?.date;
-	const currentWeekDate = currentWeekData?.date;
-
 	const currentKilometersFromLastWeek = Math.round(
-		currentWeekData?.currentKilometers || 0
+		lastWeekData?.currentKilometers || 0
 	);
 
 	const amountOfKilometersLeftByWeek =
 		KMS_PER_WEEK +
-		kilometersLeftFromLastWeek -
+		(kilometersLeftFromLastWeek || startingKilometers) -
+		(currentKilometers - currentKilometersFromLastWeek);
+
+	const amountOfKilometersLeftByYear =
+		MAX_KMS_PER_YEAR +
+		(kilometersLeftFromLastWeek || startingKilometers) -
 		(currentKilometers - currentKilometersFromLastWeek);
 
 	useEffect(() => {
@@ -81,12 +87,14 @@ const KilometersData: FC<KilometersDataProps> = ({
 						<div className={styles.amount}>
 							{currentKilometers &&
 							currentKilometersFromLastWeek ? (
-								currentKilometers -
-								currentKilometersFromLastWeek
+								<>
+									{currentKilometers -
+										currentKilometersFromLastWeek}
+									<span>km</span>
+								</>
 							) : (
-								<p>No data</p>
+								<span>No data</span>
 							)}
-							<span>km</span>
 						</div>
 						<SubTitle>kilometers gereden</SubTitle>
 					</article>
@@ -113,12 +121,18 @@ const KilometersData: FC<KilometersDataProps> = ({
 				<section className={styles.dataContainer}>
 					<article>
 						<div className={styles.amount}>
-							{amountOfKilometersLeftByWeek}
-							<span>km</span>
+							<>
+								{amountOfKilometersLeftByWeek}
+								<span>km</span>
+							</>
 							<div className={styles.smallText}>
 								({KMS_PER_WEEK} + {kilometersLeftFromLastWeek} -{" "}
-								{currentKilometers -
-									currentKilometersFromLastWeek}
+								{currentKilometersFromLastWeek && (
+									<>
+										{currentKilometers -
+											currentKilometersFromLastWeek}
+									</>
+								)}
 								)
 							</div>
 						</div>
@@ -143,7 +157,7 @@ const KilometersData: FC<KilometersDataProps> = ({
 				<section className={styles.dataContainer}>
 					<article>
 						<div className={styles.amount}>
-							{MAX_KMS_PER_YEAR - totalDrivenKilometers}
+							{amountOfKilometersLeftByYear}
 							<span>km</span>
 						</div>
 						<SubTitle>Kilometers over</SubTitle>
