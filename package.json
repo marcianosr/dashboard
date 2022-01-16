@@ -31,12 +31,11 @@
 	},
 	"proxy": "http://localhost:9000",
 	"scripts": {
-		"server": "node server.js",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"server-start": "./node_modules/.bin/netlify-lambda serve server",
+		"server": "./node_modules/.bin/netlify-lambda serve server",
 		"server-build": "./node_modules/.bin/netlify-lambda serve build"
 	},
 	"eslintConfig": {
