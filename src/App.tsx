@@ -72,6 +72,7 @@ function App() {
 				console.log("Error fetching from API: ", error);
 				error && setError("Whoops, error");
 			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
