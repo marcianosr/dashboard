@@ -26,7 +26,7 @@ export const MAX_KMS_PER_YEAR = 20000;
 export const KMS_PER_WEEK = Math.round(MAX_KMS_PER_YEAR / 52);
 
 const getWazeData = async (): Promise<WazeUser> =>
-	axios.get("/api").then((response) => response.data.api);
+	axios.get("/.netlify/server/api").then((response) => response.data.api);
 
 function App() {
 	const [localStorageData, setLocalStorageData] =

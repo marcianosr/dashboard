@@ -37,10 +37,16 @@ const getWazeData = async (res) => {
 	return result;
 };
 
+router.get("/", async (req, res) => {
+	res.json({
+		home: "home",
+	});
+});
+
 router.get("/api", async (req, res) => {
 	const result = await getWazeData();
 
-	console.log(result);
+	console.log(result, "res");
 
 	res.json({
 		api: {
@@ -49,10 +55,6 @@ router.get("/api", async (req, res) => {
 	});
 });
 
-app.use("/.netlify/functions/api", router);
-
-app.listen(3200, () => {
-	console.log("listening on port 3200");
-});
+app.use("/.netlify/functions/server", router);
 
 module.exports.handler = serverless(app);
