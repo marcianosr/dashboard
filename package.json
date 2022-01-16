@@ -39,7 +39,6 @@
 		"deploy": "gh-pages -d build",
 		"predeploy": "npm run build"
 	},
-	"homepage": "https://marcianosr.github.io/dashboard",
 	"eslintConfig": {
 		"extends": [
 			"react-app",
