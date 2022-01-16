@@ -18,6 +18,7 @@ export type WazeData = {
 	weeklyUpdate?: {
 		currentKilometers: number;
 		date: string;
+		kilometersLeft: number;
 	}[];
 };
 
@@ -75,7 +76,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<Block title="Kilometers gereden deze week">
+			<Block title="Overzicht van kilometers">
 				{!localStorageData?.currentKilometers && !error && <>Loading</>}
 				{error && <>{error}</>}
 				{
@@ -86,7 +87,7 @@ function App() {
 						)}
 					/>
 				}
-				<span>
+				<span className={"smallText"}>
 					Last API update:{" "}
 					{format(lastAPIUpdateDate, "dd-MM-yyyy HH:mm")}
 				</span>

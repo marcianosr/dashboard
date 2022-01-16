@@ -8,7 +8,7 @@ type BlockProps = {
 const Block: FC<BlockProps> = ({ title, children }) => (
 	<section className={styles.block}>
 		<span className={styles.title}>{title}</span>
-		<span className={styles.text}>{children}</span>
+		{children}
 	</section>
 );
 

@@ -1,0 +1,43 @@
+.amount {
+	font-size: 1.5rem;
+	font-weight: 700;
+
+	> span {
+		font-size: 0.75rem;
+	}
+}
+
+.container {
+	// display: flex;
+	// gap: 0.5rem;
+	// flex-wrap: wrap;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+}
+
+.innerContainer {
+	background-color: white;
+	padding: 0.75rem;
+	border-radius: 15px;
+}
+
+.dataContainer {
+	display: flex;
+	// justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+.title {
+	font-size: 0.75rem;
+	font-weight: 600;
+	margin: 0;
+	margin-bottom: 0.25rem;
+	color: #ff7075;
+}
+
+.smallText {
+	font-size: 0.75rem;
+	font-weight: 600;
+}
