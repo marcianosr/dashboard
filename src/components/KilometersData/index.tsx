@@ -14,8 +14,8 @@ type KilometersDataProps = {
 const runCronJob = (callback?: () => void) => {
 	// const job = new CronJob("* * * * * *", callback);
 	// const job = new CronJob("* * * * *", callback);
-	// const job = new CronJob("59 23 * * 0", callback);
-	const job = new CronJob("*/10 * * * *", callback);
+	const job = new CronJob("59 23 * * 0", callback);
+	// const job = new CronJob("*/10 * * * *", callback);
 
 	job.start();
 };
