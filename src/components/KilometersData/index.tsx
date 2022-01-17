@@ -94,7 +94,10 @@ const KilometersData: FC<KilometersDataProps> = ({
 									<span>km</span>
 								</>
 							) : (
-								<span>No data</span>
+								<>
+									{startingKilometers + KMS_PER_WEEK}
+									<span>km</span>
+								</>
 							)}
 						</div>
 						<SubTitle>kilometers gereden</SubTitle>
