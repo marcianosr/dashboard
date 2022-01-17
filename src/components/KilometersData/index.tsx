@@ -56,6 +56,11 @@ const KilometersData: FC<KilometersDataProps> = ({
 		(kilometersLeftFromLastWeek || startingKilometers) -
 		(currentKilometers - currentKilometersFromLastWeek);
 
+	console.log(
+		startingKilometers === currentKilometers,
+		currentKilometersFromLastWeek
+	);
+
 	useEffect(() => {
 		runCronJob(() => {
 			console.log("running cronjob...");
@@ -86,16 +91,18 @@ const KilometersData: FC<KilometersDataProps> = ({
 				<section className={styles.dataContainer}>
 					<article>
 						<div className={styles.amount}>
-							{currentKilometers &&
-							currentKilometersFromLastWeek ? (
+							{currentKilometersFromLastWeek > 0 && (
 								<>
 									{currentKilometers -
 										currentKilometersFromLastWeek}
 									<span>km</span>
 								</>
-							) : (
+							)}
+							{startingKilometers === currentKilometers && (
 								<>
-									{startingKilometers + KMS_PER_WEEK}
+									{startingKilometers -
+										currentKilometers +
+										KMS_PER_WEEK}
 									<span>km</span>
 								</>
 							)}
