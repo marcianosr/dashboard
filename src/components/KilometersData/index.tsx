@@ -58,7 +58,8 @@ const KilometersData: FC<KilometersDataProps> = ({
 
 	console.log(
 		startingKilometers === currentKilometers,
-		currentKilometersFromLastWeek
+		currentKilometersFromLastWeek,
+		currentKilometers
 	);
 
 	useEffect(() => {
@@ -91,10 +92,15 @@ const KilometersData: FC<KilometersDataProps> = ({
 				<section className={styles.dataContainer}>
 					<article>
 						<div className={styles.amount}>
-							{currentKilometersFromLastWeek > 0 && (
+							{currentKilometersFromLastWeek > 0 ? (
 								<>
 									{currentKilometers -
 										currentKilometersFromLastWeek}
+									<span>km</span>
+								</>
+							) : (
+								<>
+									{currentKilometers - startingKilometers}
 									<span>km</span>
 								</>
 							)}
@@ -138,10 +144,14 @@ const KilometersData: FC<KilometersDataProps> = ({
 							</>
 							<div className={styles.smallText}>
 								({KMS_PER_WEEK} + {kilometersLeftFromLastWeek} -{" "}
-								{currentKilometersFromLastWeek && (
+								{currentKilometersFromLastWeek > 0 ? (
 									<>
 										{currentKilometers -
 											currentKilometersFromLastWeek}
+									</>
+								) : (
+									<>
+										{currentKilometers - startingKilometers}
 									</>
 								)}
 								)
