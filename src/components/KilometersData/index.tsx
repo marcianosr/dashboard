@@ -1,13 +1,17 @@
 import { format } from "date-fns";
 import { FC, useEffect } from "react";
 import useLocalStorage from "use-local-storage";
-import { KMS_PER_WEEK, MAX_KMS_PER_YEAR, WazeData } from "../../App";
+import {
+	KMS_PER_WEEK,
+	MAX_KMS_PER_YEAR,
+	MAX_KMS_TOTAL,
+	WazeData,
+} from "../../App";
 import SubTitle from "../SubTitle";
 import styles from "./styles.module.scss";
 const { CronJob } = require("cron");
 
 type KilometersDataProps = {
-	totalDrivenKilometers: number;
 	currentKilometers: number;
 };
 
@@ -20,10 +24,7 @@ const runCronJob = (callback?: () => void) => {
 	job.start();
 };
 
-const KilometersData: FC<KilometersDataProps> = ({
-	totalDrivenKilometers,
-	currentKilometers,
-}) => {
+const KilometersData: FC<KilometersDataProps> = ({ currentKilometers }) => {
 	// const [kilometersThisWeek, setKilometersThisWeek] = useState(KMS_PER_WEEK);
 	const [localStorageData, setLocalStorageData] =
 		useLocalStorage<WazeData>("waze");
@@ -56,11 +57,10 @@ const KilometersData: FC<KilometersDataProps> = ({
 		(kilometersLeftFromLastWeek || startingKilometers) -
 		(currentKilometers - currentKilometersFromLastWeek);
 
-	console.log(
-		startingKilometers === currentKilometers,
-		currentKilometersFromLastWeek,
-		currentKilometers
-	);
+	const amountOfKilometersLeftByTotal =
+		MAX_KMS_TOTAL +
+		(kilometersLeftFromLastWeek || startingKilometers) -
+		(currentKilometers - currentKilometersFromLastWeek);
 
 	useEffect(() => {
 		runCronJob(() => {
@@ -196,14 +196,29 @@ const KilometersData: FC<KilometersDataProps> = ({
 				</section>
 			</section>
 
-			{/* <div>
-				<div className={"totalKm"}>Kilometerstand auto</div>
-				<div className={"totalKm"}>...km</div>
-			</div> */}
-			{/* <div>
-				<div className={"totalKm"}>Totaal aantal Waze km's</div>
-				<div className={"totalKm"}>{Math.round(kilometers)}km</div>
-			</div> */}
+			<section className={styles.innerContainer}>
+				<h2 className={styles.title}>Gehele periode</h2>
+
+				<section className={styles.dataContainer}>
+					<article>
+						<div className={styles.amount}>
+							{amountOfKilometersLeftByTotal}
+							<span>km</span>
+						</div>
+						<SubTitle>Kilometers over</SubTitle>
+					</article>
+				</section>
+
+				<section className={styles.dataContainer}>
+					<article>
+						<div className={styles.amount}>
+							{MAX_KMS_TOTAL}
+							<span>km</span>
+						</div>
+						<SubTitle>Max. aantal km's</SubTitle>
+					</article>
+				</section>
+			</section>
 		</section>
 	);
 };

@@ -23,6 +23,7 @@ export type WazeData = {
 };
 
 export const MAX_KMS_PER_YEAR = 20000;
+export const MAX_KMS_TOTAL = MAX_KMS_PER_YEAR * 3.5;
 export const KMS_PER_WEEK = Math.round(MAX_KMS_PER_YEAR / 52);
 
 const getWazeData = async (): Promise<WazeUser> =>
@@ -82,14 +83,7 @@ function App() {
 			<Block title="Overzicht van kilometers">
 				{!localStorageData?.currentKilometers && !error && <>Loading</>}
 				{error && <>{error}</>}
-				{
-					<KilometersData
-						currentKilometers={current}
-						totalDrivenKilometers={Math.round(
-							totalDrivenKilometers
-						)}
-					/>
-				}
+				{<KilometersData currentKilometers={current} />}
 				<span className={"smallText"}>
 					Last API update:{" "}
 					{format(lastAPIUpdateDate, "dd-MM-yyyy HH:mm")}
